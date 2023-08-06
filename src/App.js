@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import SideBar from './components/Sidebar';
+import sidebar_menu from './constants/sidebar-menu';
+
+import './App.css';
+import BulkMappingPage from './pages/BulkMapping';
+import SingleMappingPage from "./pages/SingleMapping";
+import Terminal from "./pages/Terminal";
+
+function App () {
+  return(
+    <Router>
+      <div className='dashboard-container'>
+        <SideBar menu={sidebar_menu} />
+          
+          <div className='dashboard-body'>
+              <Routes>
+                  <Route path="*" element={<div></div>} />
+                  <Route exact path="/terminal" element={<Terminal />} />
+                  <Route exact path="/bulk-mapping" element={< BulkMappingPage/>} />
+                  <Route exact path="/single-mapping" element={<SingleMappingPage />} />
+              </Routes>
+          </div>
+      </div>
+    </Router>
+  )
 }
 
 export default App;
