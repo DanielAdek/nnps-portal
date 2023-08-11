@@ -28,10 +28,7 @@ class ApiRequest {
 
       try {
         const result = await axios.post(URL.PROD_BASE_URL + "/qpos/bulkMapping", requestPayload, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
-          },
+          headers: this.getHeaders(),
         });
         const { resultBody } = result.data;
         for (const value of modifiedChunk) {
@@ -51,7 +48,7 @@ class ApiRequest {
 
   async bulkMapRequestApi2(payload) {
     const mappedSuccess = [], mappedFailed = [];
-    for (const data of payload.length) {
+    for (const data of payload) {
       const requestPayload = {
         serial: data["TID*"],
         msisdn: data["MSISDN*"],
@@ -60,10 +57,7 @@ class ApiRequest {
       };
       try {
         const result = await axios.post(URL.PROD_BASE_URL + "/qpos/map-terminal", requestPayload, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
-          },
+          headers: this.getHeaders(),
         });
         const { resultBody } = result.data;
         if (requestPayload.serial in resultBody) {
@@ -100,10 +94,7 @@ class ApiRequest {
     };
     try {
       const result = await axios.post(request_url, requestPayload, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
-        },
+        headers: this.getHeaders(),
       });
       const { resultBody } = result.data;
       alert(JSON.stringify(resultBody));
@@ -115,10 +106,7 @@ class ApiRequest {
   async searchTerminalRequestApi(payload) {
     try {
       const result = await axios.get(URL.PROD_BASE_URL + `/qpos/getTerminalDetailsByTerminalId/?terminalId=${payload}`,{
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
-        },
+        headers: this.getHeaders(),
       });
       return result.data;
     } catch (error) {
@@ -129,10 +117,7 @@ class ApiRequest {
   async changePtspRequestApi(payload) {
     try {
       const result = await axios.post(URL.PROD_BASE_URL + `/qpos/updatePtsp`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
-        },
+        headers: this.getHeaders(),
       });
       alert(JSON.stringify(result.data.resultBody));
       return result.data;
@@ -141,13 +126,37 @@ class ApiRequest {
     }
   }
 
-  async getPtspRequestApi(payload) {
+  async remapTerminal(payload) {
+    try {
+      const requestPayload = {
+        terminalMappingRequest: {
+          mappingList: [{
+            ptspId: "41",
+            serviceType: "827",
+            defaultConfig: "true",
+            c_terminalId_2: payload.cterminalId,
+            c_terminalId: payload.cterminalId,
+            terminalId: payload.terminalId,
+            msisdn: payload.msisdn,
+            entityId: payload.entityId
+          }]
+        }
+      }
+      const result = await axios.post(URL.PROD_BASE_URL + `/qpos/bulkMapping`, requestPayload, {
+        headers: this.getHeaders(),
+      });
+      alert(JSON.stringify(result.data.resultBody));
+      return result.data;
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  // 8022250132, 9155001625, 9038326010
+  async getPtspRequestApi() {
     try {
       const result = await axios.get(URL.PROD_BASE_URL + `/qpos/getAllPtsp`,{
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
-        },
+        headers: this.getHeaders(),
       });
       return result.data;
     } catch (error) {
@@ -155,10 +164,52 @@ class ApiRequest {
     }
   }
 
+  async resetKeyDownload(payload) {
+    try {
+      const requestPayload = {
+        requestInfo: {
+          isKeyUpdated: false,
+          msisdn: payload.msisdn,
+          requestCts: new Date().toISOString(),
+          requestType: "TerminalData",
+          serialId: payload.terminalId,
+          terminalId: payload.terminalId,
+          transactionInfo: {
+            isRefunded: false,
+            cardType: "EMV",
+            isoRequest: {
+              cardData: {
+                cTerminalId: payload.cterminalId,
+              }
+            },
+            resultCode: 0,
+            vendoreResultCode: 0
+          }
+        }
+      }
+      const result = await axios.post(URL.PROD_BASE_URL + `/qpos/v1/getTerminalData`, requestPayload, {
+        headers: this.getHeaders(),
+      });
+      alert(JSON.stringify(result.data.responseInfo.transactionInfo.resultDesc));
+      const confirmRequest = await axios.post(URL.PROD_BASE_URL + `/qpos/confirmKeyUpdated`, requestPayload, {
+        headers: this.getHeaders(),
+      });
+      return confirmRequest.responseInfo;
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  getHeaders() {
+    return {
+      "Content-Type": "application/json",
+      Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
+    }
+  }
+
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-
 }
 
 export const MakeApiRequest = new ApiRequest();

@@ -231,15 +231,52 @@
 }
 
 .terminal-ptsp-select {
-    padding: 0.8em;
-    padding-right: 2em;
     cursor: pointer;
     color: #FFFFFF;
     font-size: 0.9rem;
     font-weight: 700;
-    border-radius: 8px;
-    border: 1px solid orangered;
+    border-radius: 2px;
     margin-right: 10px;
     margin-left: 10px;
     background-color: #3d464d;
+}
+
+/* Dashboard page */
+.dashboard-overview-card-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+.dashboard-overview-card {
+    background-color: white;
+    width: 33%;
+    height: auto;
+    border-radius: 7%;
+    margin: 0.8rem;
+    padding: 0.6rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Montserrat', 'Roboto', 'cursive', sans-serif;
+    color: purple;
+}
+
+.dashboard-overview-card img {
+    width: 30%;
+}
+
+.dashboard-overview-chart-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+.dashboard-overview-chart-card {
+    width: 45.5%;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
 }

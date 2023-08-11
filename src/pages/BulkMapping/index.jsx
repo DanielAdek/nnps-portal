@@ -44,10 +44,11 @@ function BulkMapping () {
     if (!requestPayload) return alert("Please provide a file to upload");
 
     let result;
-    if (inputValue.mapType === 1) result = await MakeApiRequest.bulkMapRequestApi(requestPayload);
+    if (parseInt(inputValue.mapType) === 1) result = await MakeApiRequest.bulkMapRequestApi(requestPayload);
 
     else result = await MakeApiRequest.bulkMapRequestApi2(requestPayload);
 
+    console.log(result.mappedSuccess)
     setMappedTerminals(prev => prev = result.mappedSuccess);
   }
 

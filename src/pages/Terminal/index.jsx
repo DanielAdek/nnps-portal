@@ -27,8 +27,14 @@ function Terminal() {
 
   const handleUpdatePtsp = async () => {
     const payload = { ...inputValue, terminals: terminal.terminalId };
-    let result = await MakeApiRequest.changePtspRequestApi(payload);
+    await MakeApiRequest.changePtspRequestApi(payload);
   }
+
+  const handleRemap = async () => {
+    await MakeApiRequest.remapTerminal(terminal);
+  }
+
+  const handleResetKeyDownload = async () => MakeApiRequest.resetKeyDownload(terminal);
 
   const first3 = terminal?.terminalId?.substring(0, 3);
 
@@ -68,7 +74,15 @@ function Terminal() {
               <div className={"terminal-detail"}>Terminal ID: {terminal.cterminalId} </div>
               <div className={"terminal-detail"}>Msisdn: {terminal.msisdn}</div>
               <div className={"terminal-detail"}>Entity ID: {terminal.entityId}</div>
-              <div className={"terminal-detail"}>Key Download: {terminal.keyUpdated ? "Yes" : "No"}</div>
+              <div className={"terminal-detail"}>Key Download: {terminal.keyUpdated ? "Yes" : terminal.keyUpdated === false ? "No" : null}
+                { ptsps.length
+                  ?
+                    <span style={{marginLeft: "20px"}}>
+                      <input type={"button"} value={"Reset"} onClick={handleResetKeyDownload} />
+                    </span>
+                  : null
+                }
+              </div>
               <div className={"terminal-detail"}>Service Type: {terminal.serviceType}</div>
               <div style={{display: "flex"}} className={"terminal-detail"}>
                 Ptsp:
@@ -82,10 +96,17 @@ function Terminal() {
                         ))
                       }
                     </select>
-                    <span><button type={"button"} className={"dashbord-header-btn"} onClick={handleUpdatePtsp}>update</button></span>
+                    <span><input type={"button"} value={"update"} onClick={handleUpdatePtsp} /></span>
                   </div> : null
                 }
               </div>
+              {
+                ptsps.length ?
+                <span>
+                  <button type={"button"} style={{width: "100%", color: "orange"}} className={"dashbord-header-btn"} onClick={handleRemap}>Remap</button>
+                </span>
+                : null
+              }
               {/*<div className={"terminal-detail"}>Last Updated: {new Date(terminal.modifiedDate).toString()}</div>*/}
               {/*<div className={"terminal-detail"}>Date Created: {new Date(terminal.insertDate).toString()}</div>*/}
             </div>
