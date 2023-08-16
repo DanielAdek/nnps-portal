@@ -4,13 +4,15 @@ import '../styles.css';
 import { Table } from "../../components/table";
 import { MakeApiRequest } from "../../api/MakeApiRequest";
 import { convertXlsToJson } from '../../utils/xls_to_json';
-
+import template from "../../template/BulkTerminalMappingTemplate.xlsx";
+import { Loading } from "../../components/loading";
 
 function BulkMapping () {
   const [requestPayload, setRequestPayload] = useState(null);
   const [mappedTerminals, setMappedTerminals] = useState([]);
   const [uploadedFile, setUploadedFile] = useState("");
   const [inputValue, setInputValue] = useState({});
+  const [taskInAction, setTaskInAction] = useState(false);
 
   const handleOnChangeEvent = (event) => setInputValue(prev => ({...prev, [event.target.name]: event.target.value}));
 
@@ -44,12 +46,13 @@ function BulkMapping () {
     if (!requestPayload) return alert("Please provide a file to upload");
 
     let result;
+    setTaskInAction(true)
     if (parseInt(inputValue.mapType) === 1) result = await MakeApiRequest.bulkMapRequestApi(requestPayload);
 
     else result = await MakeApiRequest.bulkMapRequestApi2(requestPayload);
 
-    console.log(result.mappedSuccess)
     setMappedTerminals(prev => prev = result.mappedSuccess);
+    setTaskInAction(false)
   }
 
   const acceptedFileTypes = ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel";
@@ -58,12 +61,25 @@ function BulkMapping () {
       <div className='dashboard-content-container'>
         <div className='dashboard-content-header'>
           <h2>Bulk Mapping</h2>
-          <div className='dashboard-content-search'>
-            <select name={"mapType"} onChange={handleOnChangeEvent} className='dashboard-content-input'>
-              <option value={0}>Choose map type...</option>
-              <option value={1}>Map Type 1</option>
-              <option value={2}>Map To v2</option>
-            </select>
+          <div>
+            <a
+              href={template}
+              download="BulkTerminalMappingTemplate"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+            <button
+              style={{marginRight: "10px"}}
+              className={"dashbord-header-btn"}
+              type={"button"}>Get Template</button>
+            </a>
+            <div className='dashboard-content-search'>
+              <select name={"mapType"} onChange={handleOnChangeEvent} className='dashboard-content-input'>
+                <option value={0}>Choose map type...</option>
+                <option value={1}>Map Type 1</option>
+                <option value={2}>Map To v2</option>
+              </select>
+            </div>
           </div>
         </div>
         <div className='dashboard-content-search'>
@@ -81,6 +97,7 @@ function BulkMapping () {
       <div className="dashboard-bulk-mapping-table-container">
         <Table listOfData={mappedTerminals} />
       </div>
+      {taskInAction ? <Loading /> : null}
     </div>
   )
 }
