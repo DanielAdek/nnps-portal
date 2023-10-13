@@ -11,8 +11,8 @@ const sidebar_menu = [
     {
         id: 2,
         icon: PosIcon,
-        path: '/terminal',
-        title: 'Terminal',
+        path: '/bulk-mapping',
+        title: 'Bulk Map Terminals',
     },
     {
         id: 3,
@@ -23,8 +23,8 @@ const sidebar_menu = [
     {
         id: 4,
         icon: PosIcon,
-        path: '/bulk-mapping',
-        title: 'Bulk Map Terminals',
+        path: '/terminal',
+        title: 'Terminal',
     }
 ]
 

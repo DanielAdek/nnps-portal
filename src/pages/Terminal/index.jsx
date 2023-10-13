@@ -5,13 +5,14 @@ import telpo from "../../assets/images/telpo.webp";
 import urovo from "../../assets/images/urovo2.png";
 import terminalImg from "../../assets/images/orizon.webp";
 import { MakeApiRequest } from "../../api/MakeApiRequest";
-
+import { Loading } from "../../components/loading";
 
 function Terminal() {
   const [search, setSearchValue] = useState("");
   const [inputValue, setInputValue] = useState({});
   const [terminal, setTerminal] = useState({});
   const [ptsps, setPtsp] = useState([])
+  const [taskInAction, setTaskInAction] = useState(false);
 
   const handleOnChangeEvent = (event) => setInputValue(prev => ({...prev, [event.target.name]: event.target.value}));
 
@@ -19,22 +20,35 @@ function Terminal() {
 
   const handleSearch = async () => {
     if (!search) return alert("Please provide terminal to search...");
+    setTaskInAction(true)
     const result = await MakeApiRequest.searchTerminalRequestApi(search);
     const allPtsp = await MakeApiRequest.getPtspRequestApi();
     setTerminal(result);
     setPtsp(allPtsp);
+    setTaskInAction(false);
   }
 
   const handleUpdatePtsp = async () => {
+    setTaskInAction(true)
     const payload = { ...inputValue, terminals: terminal.terminalId };
-    await MakeApiRequest.changePtspRequestApi(payload);
+    const response = await MakeApiRequest.changePtspRequestApi(payload);
+    setTaskInAction(false)
+    setTimeout(() => alert(response), 1500);
   }
 
   const handleRemap = async () => {
-    await MakeApiRequest.remapTerminal(terminal);
+    setTaskInAction(true)
+    const response = await MakeApiRequest.remapTerminal(terminal);
+    setTaskInAction(false)
+    setTimeout(() => alert(response), 1500);
   }
 
-  const handleResetKeyDownload = async () => MakeApiRequest.resetKeyDownload(terminal);
+  const handleResetKeyDownload = async () => {
+    setTaskInAction(true)
+    const response = await MakeApiRequest.resetKeyDownload(terminal);
+    setTaskInAction(false)
+    setTimeout(() => alert(response), 1500);
+  }
 
   const first3 = terminal?.terminalId?.substring(0, 3);
 
@@ -107,6 +121,7 @@ function Terminal() {
                 </span>
                 : null
               }
+              {taskInAction ? <Loading /> : null}
               {/*<div className={"terminal-detail"}>Last Updated: {new Date(terminal.modifiedDate).toString()}</div>*/}
               {/*<div className={"terminal-detail"}>Date Created: {new Date(terminal.insertDate).toString()}</div>*/}
             </div>

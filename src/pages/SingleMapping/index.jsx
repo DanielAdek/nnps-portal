@@ -4,14 +4,20 @@ import '../styles.css';
 import terminal from "../../assets/images/urovo.webp";
 import card from "../../assets/images/nncard.svg"
 import { MakeApiRequest } from "../../api/MakeApiRequest";
-
+import { Loading } from "../../components/loading";
 
 function SingleMapping() {
   const [requestPayload, setRequestPayload] = useState({});
+  const [taskInAction, setTaskInAction] = useState(false);
 
   const handleOnChangeEvent = (event) => setRequestPayload(prev => ({...prev, [event.target.name]: event.target.value}));
 
-  const handleSubmit = async (requestType) => await MakeApiRequest.singleMapRequestApi(requestPayload, requestType);
+  const handleSubmit = async (requestType) => {
+    setTaskInAction(true)
+    const response = await MakeApiRequest.singleMapRequestApi(requestPayload, requestType);
+    setTaskInAction(false)
+    setTimeout(() => alert(response), 1500);
+  }
 
   return(
     <div className='dashboard-content'>
@@ -112,6 +118,7 @@ function SingleMapping() {
           </div>
         </div>
       </div>
+      {taskInAction ? <Loading /> : null}
     </div>
   )
 }

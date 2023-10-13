@@ -97,7 +97,7 @@ class ApiRequest {
         headers: this.getHeaders(),
       });
       const { resultBody } = result.data;
-      alert(JSON.stringify(resultBody));
+      return JSON.stringify(resultBody);
     } catch (error) {
       alert(error)
     }
@@ -119,8 +119,7 @@ class ApiRequest {
       const result = await axios.post(URL.PROD_BASE_URL + `/qpos/updatePtsp`, payload, {
         headers: this.getHeaders(),
       });
-      alert(JSON.stringify(result.data.resultBody));
-      return result.data;
+      return JSON.stringify(result.data.resultBody);
     } catch (error) {
       alert(error)
     }
@@ -145,8 +144,7 @@ class ApiRequest {
       const result = await axios.post(URL.PROD_BASE_URL + `/qpos/bulkMapping`, requestPayload, {
         headers: this.getHeaders(),
       });
-      alert(JSON.stringify(result.data.resultBody));
-      return result.data;
+      return JSON.stringify(result.data.resultBody);
     } catch (error) {
       alert(error)
     }
@@ -190,11 +188,10 @@ class ApiRequest {
       const result = await axios.post(URL.PROD_BASE_URL + `/qpos/v1/getTerminalData`, requestPayload, {
         headers: this.getHeaders(),
       });
-      alert(JSON.stringify(result.data.responseInfo.transactionInfo.resultDesc));
-      const confirmRequest = await axios.post(URL.PROD_BASE_URL + `/qpos/confirmKeyUpdated`, requestPayload, {
+      await axios.post(URL.PROD_BASE_URL + `/qpos/confirmKeyUpdated`, requestPayload, {
         headers: this.getHeaders(),
       });
-      return confirmRequest.responseInfo;
+      return JSON.stringify(result.data.responseInfo.transactionInfo.resultDesc)
     } catch (error) {
       alert(error)
     }

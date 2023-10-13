@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Chart } from 'react-google-charts';
 import '../styles.css';
 import telpo from "../../assets/images/telpo.webp";
 import urovo from "../../assets/images/urovo2.png";
 import others from "../../assets/images/orizon.webp";
 import { Table } from "../../components/table";
-import { MakeApiRequest } from "../../api/MakeApiRequest";
 
 export const data = [
   ["Task", "Hours per Day"],

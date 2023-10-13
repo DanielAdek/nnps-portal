@@ -4,12 +4,12 @@ import './loading.css';
 
 export const Loading = () => {
   return (
-    <div>
+    <div className={"loading-container"}>
       <div className={"backdrop"}></div>
       <Watch
-        height="100"
-        width="100"
-        radius="9"
+        height="80"
+        width="80"
+        radius="48"
         color="#4fa94d"
         ariaLabel="watch-loading"
         wrapperStyle={{justifyContent: "center"}}
