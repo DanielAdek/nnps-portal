@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import swal from "sweetalert";
 import '../styles.css';
 import telpo from "../../assets/images/telpo.webp";
 import urovo from "../../assets/images/urovo2.png";
@@ -19,7 +19,7 @@ function Terminal() {
   const handleSearchInputChange = (event) => setSearchValue(prev => prev = event.target.value);
 
   const handleSearch = async () => {
-    if (!search) return alert("Please provide terminal to search...");
+    if (!search) return swal("Failed","Please provide terminal to search...");
     setTaskInAction(true)
     const result = await MakeApiRequest.searchTerminalRequestApi(search);
     const allPtsp = await MakeApiRequest.getPtspRequestApi();
@@ -33,21 +33,21 @@ function Terminal() {
     const payload = { ...inputValue, terminals: terminal.terminalId };
     const response = await MakeApiRequest.changePtspRequestApi(payload);
     setTaskInAction(false)
-    setTimeout(() => alert(response), 1500);
+    setTimeout(() => swal(response, "Operation is been processed!"), 500)
   }
 
   const handleRemap = async () => {
     setTaskInAction(true)
     const response = await MakeApiRequest.remapTerminal(terminal);
     setTaskInAction(false)
-    setTimeout(() => alert(response), 1500);
+    setTimeout(() => swal(response, "Operation is been processed!"), 500)
   }
 
   const handleResetKeyDownload = async () => {
     setTaskInAction(true)
     const response = await MakeApiRequest.resetKeyDownload(terminal);
     setTaskInAction(false)
-    setTimeout(() => alert(response), 1500);
+    setTimeout(() => swal(response, "Operation is been processed!"), 500);
   }
 
   const first3 = terminal?.terminalId?.substring(0, 3);

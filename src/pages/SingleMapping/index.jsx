@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import swal from "sweetalert";
 import '../styles.css';
 import terminal from "../../assets/images/urovo.webp";
 import card from "../../assets/images/nncard.svg"
@@ -16,7 +16,7 @@ function SingleMapping() {
     setTaskInAction(true)
     const response = await MakeApiRequest.singleMapRequestApi(requestPayload, requestType);
     setTaskInAction(false)
-    setTimeout(() => alert(response), 1500);
+    setTimeout(() => swal(response, "Operation is been processed!"), 500)
   }
 
   return(

@@ -1,0 +1,125 @@
+.auth-main-section {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-family: Calibri;
+  -webkit-font-smoothing: antialiased;
+}
+
+.auth-main-container {
+  width: 80%;
+  border: 1px solid #f0f2f5;
+  display: flex;
+  box-shadow: 2px 3px 4px #ccc;
+  margin-top: 30px;
+  max-height: 600px;
+}
+.auth-left-section, .auth-right-section {
+  width: 50%;
+}
+
+.auth-left-section > h1 {
+  font-weight: 900;
+  color: #fff;
+  padding: 50px 10px 00px 26px;
+  text-align: center;
+}
+
+.auth-left-section > h1 > img {
+  font-size: 20px;
+}
+
+.auth-left-section > p {
+  color: #fff;
+  padding: 0px 10px 10px 26px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.auth-left-section > img {
+  max-width: 200px;
+  margin-bottom: 20px;
+  width: 37%;
+}
+
+.auth-left-section {
+  background-color: #262729;
+  text-align: center;
+  width: 50%;
+}
+
+.auth-left-txt {
+  color: #fff;
+  padding: 10px 10px 10px 26px;
+  text-align: center;
+}
+
+.auth-right-section {
+
+}
+
+.auth-right-section > h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #000;
+  padding: 50px 10px 00px 50px;
+}
+
+.auth-right-section > p {
+  font-weight: 600;
+  color: #000;
+  padding: 10px 50px 10px 50px;
+}
+
+.auth-right-section-form {
+  line-height: 1.5;
+  color: #292b2c;
+  font-size: 18px;
+  padding: 0px 50px 0px 50px;
+}
+
+.p-form-container {
+  margin: 20px 0;
+  width: 100%;
+}
+
+.auth-right-section-form > div > input {
+  box-shadow: none;
+  border-radius: 0px;
+  border-bottom: 1px solid #727272 !important;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 6px 12px 6px 2px;
+  width: 90%;
+  transition: border-color ease-in-out 0.15s;
+  background-color: #e6f1fc;
+}
+
+input:focus, input:active {
+  border: none !important;
+}
+
+.auth-right-section-form > div > button {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 300;
+  background: #262729 none repeat scroll 0% 0%;
+  border: none;
+  border-radius: 0;
+  width: 93.4%;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.pci-dss {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 0 0;
+}
+
+.pci-dss img {
+  width: 30%;
+}

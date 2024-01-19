@@ -1,7 +1,32 @@
 import axios from 'axios';
+import md5 from "md5";
+import swal from "sweetalert";
 import URL from './urls';
+import {apiProperties} from "../resources/api.properties";
 
 class ApiRequest {
+  async authenticate(payload) {
+    try {
+      let { username, password } = payload;
+      password = md5(password + apiProperties.getEncryptSec)
+      const result = await axios.post(URL.PROD_BASE_URL_AUTH + "/mfs-authorization/validate", {username, password, role: 1}, {
+        headers: {
+          Authorization: apiProperties.getBasicProp
+        }
+      });
+      const data = result?.data;
+      console.log(result.data);
+      if (data.statusCode !== 100 || data.message?.toLowerCase() !== "success") {
+        return swal(data.message);
+      }
+      localStorage.setItem("x-access", data?.object?.token);
+      localStorage.setItem("user_name", data?.object?.userName);
+      window.location.href = "/dashboard";
+    } catch (e) {
+      console.error(e);
+      swal("An error as occurred!");
+    }
+  }
   async bulkMapRequestApi(payload) {
     const mappedSuccess = [], mappedFailed = [];
     const defaultData = {
@@ -200,7 +225,7 @@ class ApiRequest {
   getHeaders() {
     return {
       "Content-Type": "application/json",
-      Authorization: "Bearer a6846579-b60b-4944-936c-f6e1a93184a1"
+      Authorization: `bearer ${apiProperties.getBearerProp}`
     }
   }
 

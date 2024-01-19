@@ -4,12 +4,12 @@ import { useLocation } from 'react-router-dom';
 import SideBarItem from './sidebar-item';
 
 import './styles.css';
-import logo from '../../assets/images/nownow.jpg';
+import logo from '../../assets/images/Logo.svg';
 import LogoutIcon from '../../assets/icons/logout.svg';
 
 function SideBar ({ menu }) {
   const location = useLocation();
-
+  const user_name = localStorage.getItem("user_name")
   const [active, setActive] = useState(1);
 
   useEffect(() => {
@@ -24,6 +24,11 @@ function SideBar ({ menu }) {
     setActive(id);
   }
 
+  const handleLogoutClick = () => {
+    window.location.href = "/login"
+    localStorage.clear();
+  }
+
   return(
     <nav className='sidebar'>
       <div className='sidebar-container'>
@@ -31,6 +36,7 @@ function SideBar ({ menu }) {
           <img
             src={logo}
             alt="logo" />
+          <div>{user_name}</div>
         </div>
 
         <div className='sidebar-container'>
@@ -43,8 +49,7 @@ function SideBar ({ menu }) {
               </div>
             ))}
           </div>
-
-          <div className='sidebar-footer'>
+          <div className='sidebar-footer' onClick={handleLogoutClick}>
             <span className='sidebar-item-label'>Logout</span>
             <img
               src={LogoutIcon}

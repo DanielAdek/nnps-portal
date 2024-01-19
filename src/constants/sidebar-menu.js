@@ -5,7 +5,7 @@ const sidebar_menu = [
     {
         id: 1,
         icon: DashboardIcon,
-        path: '/',
+        path: '#',
         title: 'Dashboard',
     },
     {
