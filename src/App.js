@@ -10,6 +10,7 @@ import BulkMappingPage from './pages/BulkMapping';
 import SingleMappingPage from "./pages/SingleMapping";
 import Terminal from "./pages/Terminal";
 import Authentication from "./pages/Authentication";
+import LandingPage from './pages/Home';
 
 function App () {
   return(
@@ -30,6 +31,7 @@ function App () {
           :
           <div>
             <Routes>
+              <Route exact path="/" element={<LandingPage />} />
               <Route exact path="/login" element={< Authentication/>} />
             </Routes>
           </div>

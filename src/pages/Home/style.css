@@ -1,0 +1,36 @@
+.landing-main-container {
+  /* background-color: #ccc; */
+}
+
+.landing-main-container > div > p {
+  text-align: center;
+  font-size: 60px;
+  text-transform: uppercase;
+  color: orange;
+}
+
+.div-class{
+  width: 96%;
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 50px;
+}
+
+.button {
+  padding: 20px 20px;
+  background-color: #4CAF50;
+  border: none;
+  font-size: 20px;
+  box-shadow: 2px 2px 2px 2px #ccc;
+  width: 200px;
+}
+
+.button:hover {
+  background-color: #3e8e41; 
+}
+
+.button > a {
+  text-decoration: none;
+  color: #fff;
+}
